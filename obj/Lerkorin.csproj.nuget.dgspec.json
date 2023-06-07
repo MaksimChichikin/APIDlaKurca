@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\My-project\\Lerkorin\\Lerkorin.csproj": {}
+    "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj": {}
   },
   "projects": {
-    "C:\\My-project\\Lerkorin\\Lerkorin.csproj": {
+    "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\My-project\\Lerkorin\\Lerkorin.csproj",
+        "projectUniqueName": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj",
         "projectName": "Lerkorin",
-        "projectPath": "C:\\My-project\\Lerkorin\\Lerkorin.csproj",
-        "packagesPath": "C:\\Users\\luikyuiluil\\.nuget\\packages\\",
-        "outputPath": "C:\\My-project\\Lerkorin\\obj\\",
+        "projectPath": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj",
+        "packagesPath": "C:\\Users\\maksc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\luikyuiluil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\maksc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,6 +27,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -89,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
