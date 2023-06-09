@@ -2233,11 +2233,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj",
+      "projectUniqueName": "C:\\Project\\APIDlaKurca\\Lerkorin.csproj",
       "projectName": "Lerkorin",
-      "projectPath": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj",
+      "projectPath": "C:\\Project\\APIDlaKurca\\Lerkorin.csproj",
       "packagesPath": "C:\\Users\\maksc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\obj\\",
+      "outputPath": "C:\\Project\\APIDlaKurca\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

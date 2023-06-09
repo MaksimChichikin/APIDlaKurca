@@ -7,9 +7,9 @@ namespace Lerkorin.Models
     {
         public int Id { get; set; }
         public int? IdTask { get; set; }
-        public int? IdUser { get; set; }
+        public int? IdHistoryLog { get; set; }
 
+        public virtual HistoryLog? IdHistoryLogNavigation { get; set; }
         public virtual Task? IdTaskNavigation { get; set; }
-        public virtual User? IdUserNavigation { get; set; }
     }
 }

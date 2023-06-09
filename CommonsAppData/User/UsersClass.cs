@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Lerkorin.CommonsAppData.User
 {
@@ -21,13 +23,29 @@ namespace Lerkorin.CommonsAppData.User
         public HttpStatusCode Authenticate(string login, string password)
         {
             Models.User user = _context.Users.FirstOrDefault(x => x.Login == login);
-
-            if (user != null)
+            if (user != null && user.IdUserStatus != 1)
             {
+
+
                 if (user.Password == password)
                 {
-                    user.ReleaseDate = DateTime.Today;
-                    user.NumberOfLoginAttempts = 0; // Присваиваем значение 0
+
+
+                    user.IdUserActivityNavigation = _context.UserActivities.FirstOrDefault(a => a.Id == 1);
+
+
+                    HistoryLog logEntry = new HistoryLog
+                    {
+                        UserLoginDate = DateTime.Now,
+                        LoginAttempt = user.NumberOfLoginAttempts,
+                        IdUser = user.Id
+                    };
+
+                    _context.HistoryLogs.Add(logEntry);
+                    _context.SaveChanges();
+
+                    user.NumberOfLoginAttempts = 0;
+
                     _context.SaveChanges();
                     return HttpStatusCode.OK;
                 }
@@ -36,9 +54,25 @@ namespace Lerkorin.CommonsAppData.User
                     user.NumberOfLoginAttempts++;
                     _context.SaveChanges();
                 }
-            }
 
-            return HttpStatusCode.Unauthorized; // Возвращаем статус 401 (Unauthorized)
+            }
+            return HttpStatusCode.Unauthorized;
+        }
+        private string GetMd5Hash(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    builder.Append(hashBytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
         }
 
         public List<UserDTO> FirstOfDefault(string login, string password)
@@ -47,26 +81,20 @@ namespace Lerkorin.CommonsAppData.User
 
             if (authenticationResult == HttpStatusCode.OK)
             {
-                // Получаем текущую дату и время
-                DateTime currentDateTime = DateTime.Now;
 
-                // Обновляем поле ReleaseDate для соответствующего пользователя на текущую дату и время
-                Models.User user = _context.Users.FirstOrDefault(x => x.Login == login && x.Password == password);
-                if (user != null)
-                {
-                    user.ReleaseDate = currentDateTime;
-                    _context.SaveChanges(); // Сохраняем изменения в базе данных
-                }
+
 
                 List<UserDTO> data = _context.Users.Include(x => x.IdRoleNavigation)
+                    .Include(x => x.IdUserActivityNavigation)
                     .Where(x => x.Login == login && x.Password == password)
                     .Select(x => new UserDTO
                     {
+                        Id = x.Id,
                         Login = x.Login,
-                        Password = x.Password,
                         Role = x.IdRoleNavigation.Name,
-                        ReleaseDate = currentDateTime,
-                        NumberOfLoginAttempts = (int)x.NumberOfLoginAttempts
+                        Activity = x.IdUserActivityNavigation.Name,
+                        IsFirstLogin = (bool)x.IsFirstLogin
+
                     })
                     .ToList();
 
@@ -79,7 +107,6 @@ namespace Lerkorin.CommonsAppData.User
         }
     }
 }
-
 
 
 

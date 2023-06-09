@@ -21,6 +21,7 @@ namespace Lerkorin.Models
         public virtual DbSet<Catalog> Catalogs { get; set; } = null!;
         public virtual DbSet<Company> Companies { get; set; } = null!;
         public virtual DbSet<Delivery> Deliveries { get; set; } = null!;
+        public virtual DbSet<HistoryLog> HistoryLogs { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
@@ -45,15 +46,15 @@ namespace Lerkorin.Models
             {
                 entity.ToTable("All");
 
+                entity.HasOne(d => d.IdHistoryLogNavigation)
+                    .WithMany(p => p.Alls)
+                    .HasForeignKey(d => d.IdHistoryLog)
+                    .HasConstraintName("FK_All_HistoryLog");
+
                 entity.HasOne(d => d.IdTaskNavigation)
                     .WithMany(p => p.Alls)
                     .HasForeignKey(d => d.IdTask)
                     .HasConstraintName("FK_All_Task");
-
-                entity.HasOne(d => d.IdUserNavigation)
-                    .WithMany(p => p.Alls)
-                    .HasForeignKey(d => d.IdUser)
-                    .HasConstraintName("FK_All_User");
             });
 
             modelBuilder.Entity<Brand>(entity =>
@@ -106,6 +107,18 @@ namespace Lerkorin.Models
                     .WithMany(p => p.Deliveries)
                     .HasForeignKey(d => d.IdStatus)
                     .HasConstraintName("FK_Delivery_Status");
+            });
+
+            modelBuilder.Entity<HistoryLog>(entity =>
+            {
+                entity.ToTable("HistoryLog");
+
+                entity.Property(e => e.UserLoginDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdUserNavigation)
+                    .WithMany(p => p.HistoryLogs)
+                    .HasForeignKey(d => d.IdUser)
+                    .HasConstraintName("FK_HistoryLog_User");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -169,11 +182,11 @@ namespace Lerkorin.Models
 
                 entity.Property(e => e.DateAdd).HasColumnType("datetime");
 
+                entity.Property(e => e.FullName).HasMaxLength(50);
+
                 entity.Property(e => e.Login).HasMaxLength(100);
 
                 entity.Property(e => e.Password).HasMaxLength(50);
-
-                entity.Property(e => e.ReleaseDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IdRoleNavigation)
                     .WithMany(p => p.Users)

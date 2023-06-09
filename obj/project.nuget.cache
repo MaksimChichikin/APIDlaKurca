@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0ZsQKy9CdlT09CTo6SiMs7cPuHAglQOv1IY1rmKPTHJuwF3MAcB5f7Nd1Y5J8ZxjIp0F2cgSJUonrVE0Co+iQQ==",
+  "dgSpecHash": "nk6PRaV+Vs15i23k/zuz+F1SL8WYMRZ6F7992q0NnL14YCa9MpdgQC55dBGTMyBzFx7toMAQFHv4/c+pZFw3mw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\maksc\\Downloads\\APIDlaKurca\\Lerkorin.csproj",
+  "projectFilePath": "C:\\Project\\APIDlaKurca\\Lerkorin.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maksc\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\maksc\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
