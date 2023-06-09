@@ -23,7 +23,7 @@ namespace Lerkorin.CommonsAppData.User
         public HttpStatusCode Authenticate(string login, string password)
         {
             Models.User user = _context.Users.FirstOrDefault(x => x.Login == login);
-            if (user != null && user.IdUserStatus != 1)
+            if (user != null)
             {
 
 
@@ -81,7 +81,7 @@ namespace Lerkorin.CommonsAppData.User
                         Role = x.IdRoleNavigation.Name,
                         Activity = x.IdUserActivityNavigation.Name,
                         IsFirstLogin = (bool)x.IsFirstLogin,
-                        DateAdd = (DateTime)x.DateAdd,
+                        DateAdd = x.DateAdd.HasValue ? x.DateAdd.Value : DateTime.MinValue,
                         UserStatus = x.IdUserStatusNavigation.Name
                     })
                     .ToList();
