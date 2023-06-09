@@ -93,8 +93,8 @@ namespace Lerkorin.CommonsAppData.User
                         Login = x.Login,
                         Role = x.IdRoleNavigation.Name,
                         Activity = x.IdUserActivityNavigation.Name,
-                        IsFirstLogin = (bool)x.IsFirstLogin
-
+                        IsFirstLogin = (bool)x.IsFirstLogin,
+                        DateAdd = (DateTime)x.DateAdd
                     })
                     .ToList();
 
