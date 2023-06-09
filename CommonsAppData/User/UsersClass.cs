@@ -58,22 +58,8 @@ namespace Lerkorin.CommonsAppData.User
             }
             return HttpStatusCode.Unauthorized;
         }
-        private string GetMd5Hash(string input)
-        {
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    builder.Append(hashBytes[i].ToString("x2"));
-                }
-
-                return builder.ToString();
-            }
-        }
+    
+        
 
         public List<UserDTO> FirstOfDefault(string login, string password)
         {
@@ -86,6 +72,7 @@ namespace Lerkorin.CommonsAppData.User
 
                 List<UserDTO> data = _context.Users.Include(x => x.IdRoleNavigation)
                     .Include(x => x.IdUserActivityNavigation)
+                    .Include(x => x.IdUserStatusNavigation)
                     .Where(x => x.Login == login && x.Password == password)
                     .Select(x => new UserDTO
                     {
@@ -94,7 +81,8 @@ namespace Lerkorin.CommonsAppData.User
                         Role = x.IdRoleNavigation.Name,
                         Activity = x.IdUserActivityNavigation.Name,
                         IsFirstLogin = (bool)x.IsFirstLogin,
-                        DateAdd = (DateTime)x.DateAdd
+                        DateAdd = (DateTime)x.DateAdd,
+                        UserStatus = x.IdUserStatusNavigation.Name
                     })
                     .ToList();
 

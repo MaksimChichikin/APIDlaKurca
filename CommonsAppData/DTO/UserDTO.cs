@@ -14,7 +14,7 @@ namespace Lerkorin.CommonsAppData.DTO
         public DateTime DateAdd { get; set; }
         public bool IsFirstLogin { get; set; }
 
-
+        public string? UserStatus { get; set; }
 
     }
 }
