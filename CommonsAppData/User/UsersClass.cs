@@ -1,13 +1,13 @@
-﻿using Lerkorin.CommonsAppData.DTO;
-using Lerkorin.Interface;
-using Lerkorin.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using Lerkorin.CommonsAppData.DTO;
+using Lerkorin.Interface;
+using Lerkorin.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lerkorin.CommonsAppData.User
 {
@@ -25,14 +25,11 @@ namespace Lerkorin.CommonsAppData.User
             Models.User user = _context.Users.FirstOrDefault(x => x.Login == login);
             if (user != null)
             {
+                string hashedPassword = GetMd5Hash(password);
 
-
-                if (user.Password == password)
+                if (user.Password == hashedPassword)
                 {
-
-
                     user.IdUserActivityNavigation = _context.UserActivities.FirstOrDefault(a => a.Id == 1);
-
 
                     HistoryLog logEntry = new HistoryLog
                     {
@@ -54,12 +51,25 @@ namespace Lerkorin.CommonsAppData.User
                     user.NumberOfLoginAttempts++;
                     _context.SaveChanges();
                 }
-
             }
             return HttpStatusCode.Unauthorized;
         }
-    
-        
+
+        private string GetMd5Hash(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+        }
 
         public List<UserDTO> FirstOfDefault(string login, string password)
         {
@@ -67,13 +77,10 @@ namespace Lerkorin.CommonsAppData.User
 
             if (authenticationResult == HttpStatusCode.OK)
             {
-
-
-
                 List<UserDTO> data = _context.Users.Include(x => x.IdRoleNavigation)
                     .Include(x => x.IdUserActivityNavigation)
                     .Include(x => x.IdUserStatusNavigation)
-                    .Where(x => x.Login == login && x.Password == password)
+                    .Where(x => x.Login == login && x.Password == GetMd5Hash(password))
                     .Select(x => new UserDTO
                     {
                         Id = x.Id,
@@ -95,6 +102,7 @@ namespace Lerkorin.CommonsAppData.User
         }
     }
 }
+
 
 
 
